@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f0f0f0;
+}
+
+.container {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.controls {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin: 10px 0;
+}
+
+.canvas-container {
+  width: 400px;
+  height: 400px;
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<title></title>
+</head>
+<body>
+
+<div class="container">
+  <h1>Grafico de Usos de Navegador</h1>
+  <div class="controls">
+    <label>
+      Color del Gráfico:
+      <select id="color-selector">
+        <option value="red">Rojo</option>
+        <option value="blue">Azul</option>
+        <option value="pink">Rosado</option>
+      </select>
+    </label>
+    <label>
+      Direccion:
+      <select id="orientation-selector">
+        <option value="bar">Vertical</option>
+        <option value="horizontalBar">Horizontal</option>
+      </select>
+    </label>
+  </div>
+  
+  <div class="canvas-container">
+    <canvas id="myChart"></canvas>
+  </div>
+</div>
+
+<script>
+const ctx = document.getElementById('myChart').getContext('2d');
+
+const data = {
+  labels: ['Chrome', 'Firefox', 'Safari', 'Edge'],
+  datasets: [{
+    data: [70, 15, 10, 5],
+    backgroundColor: 'red'
+  }]
+};
+
+let chartType = 'bar';
+
+const chart = new Chart(ctx, {
+  type: chartType,
+  data: data,
+  options: {}
+});
+
+document.getElementById('color-selector').addEventListener('change', (e) => {
+  data.datasets[0].backgroundColor = e.target.value;
+  chart.update();
+});
+
+document.getElementById('orientation-selector').addEventListener('change', (e) => {
+  chartType = e.target.value;
+  chart.type = chartType;
+  chart.update();
+});
+</script>
+</body>
+</html>
